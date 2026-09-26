@@ -1,0 +1,9 @@
+{
+  "appId": "com.urbandx.glosarioti",
+  "appName": "Glosario TI",
+  "webDir": "build",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https"
+  }
+}
