@@ -25,7 +25,7 @@ interface Usuario {
   favoritos: number[];
 }
 
-const API_URL = 'http://localhost:5000/api';
+const API_URL = 'https://glosario-ti-backend.onrender.com/api';
 
 function App() {
   const [terminos, setTerminos] = useState<Termino[]>([]);
