@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+// ✅ URL del backend en producción (Render)
+const API_URL = 'https://glosario-ti-backend.onrender.com/api';
+
 interface LoginProps {
   onLogin: (usuario: any, token: string) => void;
   onClose: () => void;
@@ -24,7 +27,7 @@ const Login: React.FC<LoginProps> = ({ onLogin, onClose }) => {
     try {
       const endpoint = esRegistro ? '/auth/registro' : '/auth/login';
       const response = await axios.post(
-        `http://localhost:5000/api${endpoint}`,
+        `${API_URL}${endpoint}`,  // ← Usa la variable
         formData
       );
 
@@ -36,7 +39,7 @@ const Login: React.FC<LoginProps> = ({ onLogin, onClose }) => {
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('usuario', JSON.stringify(response.data.usuario));
         onLogin(response.data.usuario, response.data.token);
-        onClose(); // ← Cerrar el modal al loguearse
+        onClose();
       }
     } catch (err: any) {
       setError(err.response?.data?.message || 'Error de conexión');
