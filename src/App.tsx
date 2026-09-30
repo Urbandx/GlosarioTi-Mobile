@@ -182,23 +182,49 @@ function App() {
   };
 
   if (cargando) {
-    return (
-      <div className="cargando">
+  return (
+    <div className="App">
+      <Header 
+        usuario={usuario}
+        favoritos={favoritos}
+        onAbrirLogin={() => setMostrarLogin(true)}
+        onCerrarSesion={handleCerrarSesion}
+        onMostrarFavoritos={handleMostrarFavoritos}
+        onMostrarTodos={handleMostrarTodos}
+      />
+      <div className="cargando" style={{ paddingTop: '120px' }}>
         <div>⏳ Cargando términos...</div>
       </div>
-    );
-  }
+      {mostrarLogin && (
+        <Login onLogin={handleLogin} onClose={() => setMostrarLogin(false)} />
+      )}
+    </div>
+  );
+}
 
   if (error) {
-    return (
-      <div className="error-message">
+  return (
+    <div className="App">
+      <Header 
+        usuario={usuario}
+        favoritos={favoritos}
+        onAbrirLogin={() => setMostrarLogin(true)}
+        onCerrarSesion={handleCerrarSesion}
+        onMostrarFavoritos={handleMostrarFavoritos}
+        onMostrarTodos={handleMostrarTodos}
+      />
+      <div className="error-message" style={{ paddingTop: '120px', textAlign: 'center' }}>
         <p>{error}</p>
         <button onClick={cargarTerminos} className="retry-btn">
           Intentar nuevamente
         </button>
       </div>
-    );
-  }
+      {mostrarLogin && (
+        <Login onLogin={handleLogin} onClose={() => setMostrarLogin(false)} />
+      )}
+    </div>
+  );
+}
 
   return (
     <div className="App">
