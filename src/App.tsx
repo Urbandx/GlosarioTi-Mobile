@@ -72,6 +72,8 @@ function App() {
     }
   };
 
+  
+
   // Filtrar términos
   useEffect(() => {
     let resultados = terminos;
