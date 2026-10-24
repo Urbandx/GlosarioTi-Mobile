@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { LocalNotifications } from '@capacitor/local-notifications';
 
 interface Usuario {
   id: string;
   nombre: string;
   email: string;
+  rol: string;
   favoritos: number[];
 }
 
@@ -39,6 +41,32 @@ const Header: React.FC<HeaderProps> = ({
     localStorage.setItem('theme', nuevoTema);
   };
 
+   const probarNotificacion = async () => {
+    try {
+      // Solicitar permisos para Android 13+
+      const permiso = await LocalNotifications.requestPermissions();
+      if (permiso.display !== 'granted') {
+        alert('Necesitas dar permisos de notificación en tu teléfono.');
+        return;
+      }
+
+      // Programar notificación con 2 segundos de retraso
+      await LocalNotifications.schedule({
+        notifications: [
+          {
+            title: 'Glosario TI',
+            body: '¡Nuevo término agregado! Revisa las últimas actualizaciones.',
+            id: 1,
+            schedule: { at: new Date(Date.now() + 1000 * 2) }
+          }
+        ]
+      });
+    } catch (error) {
+      console.error('Error al enviar notificación:', error);
+      alert('Error al enviar la notificación');
+    }
+  };
+
   return (
     <header id="header" role="banner">
       <div className="logo">
@@ -56,10 +84,29 @@ const Header: React.FC<HeaderProps> = ({
                   ★ Favoritos ({favoritos.length})
                 </button>
               </li>
+              
+              {/* BOTÓN PARA LA EVIDENCIA DE NOTIFICACIÓN */}
+              <li>
+                <button 
+                  onClick={probarNotificacion} 
+                  style={{ 
+                    background: '#eab308', 
+                    color: '#fff', 
+                    padding: '0.5rem 1rem', 
+                    borderRadius: '6px', 
+                    border: 'none',
+                    fontWeight: 'bold',
+                    cursor: 'pointer'
+                  }}
+                >
+                  🔔 Notificar
+                </button>
+              </li>
+
               <li className="user-info">
                 <span>👤 {usuario.nombre}</span>
                 <button onClick={onCerrarSesion} className="logout-btn">
-                  Cerrar Sesión
+                  Salir
                 </button>
               </li>
             </>

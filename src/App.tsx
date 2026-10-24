@@ -22,9 +22,9 @@ interface Usuario {
   id: string;
   nombre: string;
   email: string;
+  rol: string; // <-- AÑADIR ESTA LÍNEA
   favoritos: number[];
 }
-
 const API_URL = 'https://glosario-ti-backend.onrender.com/api';
 
 function App() {
